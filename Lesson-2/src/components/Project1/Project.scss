@@ -1,0 +1,42 @@
+.navbar {
+	display: flex;
+	align-items: center;
+	justify-content: space-between;
+	max-width: 1240px;
+	height: 69px;
+	margin: 0 auto;
+	background-color: #ffffff;
+	.left {
+		font-family: Inter;
+		font-weight: 700;
+		font-style: Bold;
+		font-size: 26px;
+		color: #000000;
+		line-height: 100%;
+		letter-spacing: 0%;
+		cursor: pointer;
+	}
+	.middle {
+		display: flex;
+		align-items: center;
+		gap: 20px;
+		font-family: Inter;
+		p {
+			font-weight: 500;
+			font-style: Medium;
+			font-size: 22px;
+			color: #000000;
+			line-height: 100%;
+			letter-spacing: 0%;
+			cursor: pointer;
+			:hover {
+				color: #31b465;
+			}
+		}
+	}
+	.rigth {
+		display: flex;
+		align-items: center;
+		gap: 10px;
+	}
+}

@@ -1,0 +1,128 @@
+// import { useMemo, useState } from 'react';
+import './App.css';
+// import Project from './components/Project';
+import Lesson3 from './components1/Lesson3';
+
+// type Pos = { x: number; y: number };
+
+export default function App() {
+	return (
+		<>
+			{/* <Project /> */}
+			<Lesson3 />
+
+			{/* <div className='min-h-screen bg-white'> */}
+			{/* ===== TOPSHIRIQ 1 ===== */}
+			{/* <section className='mx-auto max-w-5xl p-6'> */}
+			{/* <h1 className='text-xl font-bold mb-4'>Topshiriq 1</h1> */}
+			{/* <Task1Color /> */}
+			{/* </section> */}
+
+			{/* <hr className='my-8 border-gray-200' /> */}
+
+			{/* ===== TOPSHIRIQ 2 ===== */}
+			{/* <section className='mx-auto max-w-5xl p-6'> */}
+			{/* <h1 className='text-xl font-bold mb-4'>Topshiriq 2</h1> */}
+			{/* <Task2MoveBox /> */}
+			{/* </section> */}
+			{/* </div> */}
+		</>
+	);
+}
+
+/* ============ TOPSHIRIQ 1 ===================== */
+// function Task1Color() {
+// 	const [color, setColor] = useState('bg-blue-300');
+
+// 	return (
+// 		<div className='flex flex-col items-center gap-6'>
+// 			<div className='flex gap-4 flex-wrap justify-center'>
+// 				<button
+// 					onClick={() => setColor('bg-blue-300')}
+// 					className='px-6 py-2 border border-blue-500 rounded-lg text-blue-600'>
+// 					blue
+// 				</button>
+// 				<button
+// 					onClick={() => setColor('bg-red-300')}
+// 					className='px-6 py-2 border border-red-500 rounded-lg text-red-600'>
+// 					red
+// 				</button>
+// 				<button
+// 					onClick={() => setColor('bg-green-300')}
+// 					className='px-6 py-2 border border-green-500 rounded-lg text-green-600'>
+// 					green
+// 				</button>
+// 				<button onClick={() => setColor('bg-black')} className='px-6 py-2 border border-black rounded-lg text-black'>
+// 					black
+// 				</button>
+// 			</div>
+
+// 			<div
+// 				className={`w-[420px] max-w-[95vw] h-[220px] rounded-xl border-2 border-blue-400 transition-colors duration-300 ${color}`}
+// 			/>
+// 		</div>
+// 	);
+// }
+
+/* ============ TOPSHIRIQ 2 ===================== */
+// function Task2MoveBox() {
+// 	const FRAME = 560;
+// 	const BOX = 80;
+// 	const STEP = 24;
+
+// 	const maxX = useMemo(() => FRAME - BOX, [FRAME, BOX]);
+// 	const maxY = useMemo(() => FRAME - BOX, [FRAME, BOX]);
+
+// 	const clamp = (v: number, min: number, max: number) => Math.max(min, Math.min(max, v));
+
+// 	const [pos, setPos] = useState<Pos>({ x: 24, y: 24 });
+
+// 	const move = (dx: number, dy: number) => {
+// 		setPos(p => ({
+// 			x: clamp(p.x + dx, 0, maxX),
+// 			y: clamp(p.y + dy, 0, maxY),
+// 		}));
+// 	};
+
+// 	return (
+// 		<div className='flex flex-col items-center gap-8'>
+// 			{/* RAMKA */}
+// 			<div
+// 				className='relative max-w-[95vw] aspect-square border-[10px] border-pink-600 bg-white overflow-hidden'
+// 				style={{ width: FRAME }}>
+// 				<div
+// 					className='absolute w-20 h-20 border-[10px] border-green-500 bg-white'
+// 					style={{ left: pos.x, top: pos.y }}
+// 				/>
+// 			</div>
+
+// 			{/* CONTROLLER */}
+// 			<div className='max-w-[95vw]' style={{ width: FRAME }}>
+// 				<div className='flex items-end justify-between gap-6'>
+// 					<button
+// 						onClick={() => move(-STEP, 0)}
+// 						className='w-[170px] h-[70px] border-[10px] border-pink-600 bg-white active:scale-95'
+// 						aria-label='Left'
+// 					/>
+// 					<div className='flex flex-col gap-4 items-center'>
+// 						<button
+// 							onClick={() => move(0, -STEP)}
+// 							className='w-[170px] h-[70px] border-[10px] border-pink-600 bg-white active:scale-95'
+// 							aria-label='Up'
+// 						/>
+// 						<button
+// 							onClick={() => move(0, STEP)}
+// 							className='w-[170px] h-[70px] border-[10px] border-pink-600 bg-white active:scale-95'
+// 							aria-label='Down'
+// 						/>
+// 					</div>
+// 					<button
+// 						onClick={() => move(STEP, 0)}
+// 						className='w-[170px] h-[70px] border-[10px] border-pink-600 bg-white active:scale-95'
+// 						aria-label='Right'
+// 					/>
+// 				</div>
+// 			</div>
+// 		</div>
+// 	);
+// }
