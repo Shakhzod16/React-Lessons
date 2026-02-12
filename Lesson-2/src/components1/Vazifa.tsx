@@ -117,7 +117,7 @@ export default function Vazifa() {
 							</div>
 
 							<div className='flex items-center gap-3'>
-								<button onClick={() => editTodo(todo)} className='text-yellow-500'>
+								<button onClick={() => editTodo(todo)} /*  */ className='text-yellow-500'>
 									<FaEdit />
 								</button>
 
