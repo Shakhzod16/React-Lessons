@@ -62,7 +62,8 @@
 // 				width: `${width}px`,
 // 				height: `${height}px`,
 // 				border: `${border}px solid black`,
-// 				backgroundColor: 'green',
+// 				backgroundColor: '',
+// 				// padding-left:10px,
 // 				margin: '10px',
 // 				display: 'flex',
 // 				justifyContent: 'center',
@@ -103,21 +104,21 @@
 
 // ======== Homework 4 ========
 
-interface IProps {
-	img: string;
-}
+// interface IProps {
+// 	img: string;
+// }
 
-function Lesson4({ img }: IProps) {
-	return (
-		<div
-			style={{
-				width: '200px',
-				height: '200px',
-				margin: '10px',
-			}}>
-			<img src={img} alt='image' style={{ width: '100%', height: '100%', objectFit: 'cover' }} />
-		</div>
-	);
-}
+// function Lesson4({ img }: IProps) {
+// 	return (
+// 		<div
+// 			style={{
+// 				width: '200px',
+// 				height: '200px',
+// 				margin: '10px',
+// 			}}>
+// 			<img src={img} alt='image' style={{ width: '100%', height: '100%', objectFit: 'cover' }} />
+// 		</div>
+// 	);
+// }
 
-export default Lesson4;
+// export default Lesson4;
