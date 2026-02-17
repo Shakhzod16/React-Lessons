@@ -1,8 +1,14 @@
 import './App.css';
-import Users from './assets/Users';
+import Products from './assets/Products';
+// import Users from './assets/Users';
 
 function App() {
-	return <Users />;
+	return (
+		<>
+			<Products />
+		</>
+	);
 }
+
 
 export default App;
