@@ -37,22 +37,47 @@ function Products() {
 	const [description, setDescription] = useState('');
 	const [price, setPrice] = useState('');
 
+	const [editingIndex, setEditingIndex] = useState<null | number>(null);
+
 	const handleSave = () => {
 		const productObj: Product = {
-			id: Date.now(),
+			id: editingIndex === null ? Date.now() : products[editingIndex].id,
 			name,
 			imageUrl,
 			price: Number(price),
 			description,
 		};
 
-		setProducts(prev => [...prev, productObj]);
+		if (editingIndex === null) {
+			setProducts(prev => [...prev, productObj]);
+		} else {
+			products[editingIndex] = productObj;
+			setProducts([...products]);
+			setEditingIndex(null);
+		}
+
 		setModalVisible(false);
 
 		setName('');
 		setImageUrl('');
 		setDescription('');
 		setPrice('');
+	};
+
+	const deleteProduct = (index: number) => {
+		products.splice(index, 1);
+		setProducts([...products]);
+	};
+
+	const handleEdit = (index: number) => {
+		const currentProduct = products[index];
+
+		setEditingIndex(index);
+		setModalVisible(true);
+		setName(currentProduct.name);
+		setImageUrl(currentProduct.imageUrl);
+		setDescription(currentProduct.description);
+		setPrice(currentProduct.price + '');
 	};
 
 	return (
@@ -68,13 +93,15 @@ function Products() {
 			</div>
 
 			<div className='mt-6! grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6'>
-				{products.map(product => (
+				{products.map((product, index) => (
 					<ProductCard
 						key={product.id}
 						name={product.name}
 						description={product.description}
 						imageUrl={product.imageUrl}
 						price={product.price}
+						deleteProduct={() => deleteProduct(index)}
+						EditProduct={() => handleEdit(index)}
 					/>
 				))}
 			</div>
