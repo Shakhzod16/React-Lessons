@@ -2,7 +2,7 @@ interface UserCardProps {
 	name: string;
 	email: string;
 	password: string;
-	role: string;
+	role: 'admin' | 'user';
 	profileImage: string;
 }
 
@@ -12,22 +12,24 @@ function UserCard({ name, email, password, role, profileImage }: UserCardProps) 
 			{/* Header */}
 			<div className='flex items-center gap-3 mb-4'>
 				<img src={profileImage} alt={name} className='w-14 h-14 rounded-full object-cover' />
-				<div>
-					<h3 className='font-semibold text-lg'>{name}</h3>
-					<p className='text-sm text-gray-500'>{email}</p>
+
+				<div className='min-w-0'>
+					<h3 className='font-semibold text-lg leading-tight truncate'>{name}</h3>
+					<p className='text-sm text-gray-500 truncate'>{email}</p>
 				</div>
 
 				<span
 					className={`ml-auto text-xs px-3 py-1 rounded-full ${
 						role === 'admin' ? 'bg-red-100 text-red-600' : 'bg-gray-100 text-gray-600'
 					}`}>
-					{role}
+					{role === 'admin' ? 'Admin' : 'User'}
 				</span>
 			</div>
 
 			{/* Password */}
-			<div className='bg-gray-50 rounded-lg p-3 text-sm text-gray-600 mb-4'>
-				<span className='font-medium'>Password:</span> {password}
+			<div className='bg-gray-50 rounded-lg px-3 py-2 text-sm text-gray-600 mb-4 flex items-center justify-between'>
+				<span className='font-medium'>Password</span>
+				<span className='font-mono'>{password}</span>
 			</div>
 
 			{/* Buttons */}
