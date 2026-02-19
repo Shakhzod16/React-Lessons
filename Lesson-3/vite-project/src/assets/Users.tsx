@@ -1,15 +1,9 @@
+import { useEffect, useMemo, useState } from 'react';
+import { useForm } from 'react-hook-form';
 import UserCard from './UserCard';
+import type { User, UserRole } from './UserCard';
 
-type User = {
-	id: number;
-	email: string;
-	password: string;
-	name: string;
-	role: 'admin' | 'user';
-	profileImage: string;
-};
-
-const users: User[] = [
+const initialUsers: User[] = [
 	{
 		id: 1,
 		email: 'john.doe@example.com',
@@ -90,105 +84,197 @@ const users: User[] = [
 		role: 'user',
 		profileImage: 'https://images.unsplash.com/photo-1517841905240-472988babdf9?q=80&w=256&h=256&fit=crop',
 	},
-	{
-		id: 11,
-		email: 'robert.garcia@example.com',
-		password: 'robert_garcia',
-		name: 'Robert Garcia',
-		role: 'user',
-		profileImage: 'https://images.unsplash.com/photo-1522075469751-3a6694fb2f61?q=80&w=256&h=256&fit=crop',
-	},
-	{
-		id: 12,
-		email: 'chloe.martinez@example.com',
-		password: 'chloe_secure',
-		name: 'Chloe Martinez',
-		role: 'user',
-		profileImage: 'https://images.unsplash.com/photo-1534528741775-53994a69daeb?q=80&w=256&h=256&fit=crop',
-	},
-	{
-		id: 13,
-		email: 'daniel.anderson@example.com',
-		password: 'daniel_123',
-		name: 'Daniel Anderson',
-		role: 'admin',
-		profileImage: 'https://images.unsplash.com/photo-1500648767791-00dcc994a43e?q=80&w=256&h=256&fit=crop',
-	},
-	{
-		id: 14,
-		email: 'mia.thomas@example.com',
-		password: 'mia_password',
-		name: 'Mia Thomas',
-		role: 'user',
-		profileImage: 'https://images.unsplash.com/photo-1524504388940-b1c1722653e1?q=80&w=256&h=256&fit=crop',
-	},
-	{
-		id: 15,
-		email: 'william.jackson@example.com',
-		password: 'william_pass',
-		name: 'William Jackson',
-		role: 'user',
-		profileImage: 'https://images.unsplash.com/photo-1492562080023-ab3db95bfbce?q=80&w=256&h=256&fit=crop',
-	},
-	{
-		id: 16,
-		email: 'ava.harris@example.com',
-		password: 'ava_secure',
-		name: 'Ava Harris',
-		role: 'user',
-		profileImage: 'https://images.unsplash.com/photo-1554151228-14d9def656e4?q=80&w=256&h=256&fit=crop',
-	},
-	{
-		id: 17,
-		email: 'ethan.moore@example.com',
-		password: 'ethan_moore',
-		name: 'Ethan Moore',
-		role: 'user',
-		profileImage: 'https://images.unsplash.com/photo-1501196354995-cbb51c65aaea?q=80&w=256&h=256&fit=crop',
-	},
-	{
-		id: 18,
-		email: 'isabella.clark@example.com',
-		password: 'isabella_pwd',
-		name: 'Isabella Clark',
-		role: 'user',
-		profileImage: 'https://images.unsplash.com/photo-1529626455594-4ff0802cfb7e?q=80&w=256&h=256&fit=crop',
-	},
-	{
-		id: 19,
-		email: 'ryan.lewis@example.com',
-		password: 'ryan_secure',
-		name: 'Ryan Lewis',
-		role: 'admin',
-		profileImage: 'https://images.unsplash.com/photo-1504257432389-52343af06ae3?q=80&w=256&h=256&fit=crop',
-	},
-	{
-		id: 20,
-		email: 'grace.walker@example.com',
-		password: 'grace_walker',
-		name: 'Grace Walker',
-		role: 'user',
-		profileImage: 'https://images.unsplash.com/photo-1519345182560-3f2917c472ef?q=80&w=256&h=256&fit=crop',
-	},
 ];
 
-function Users() {
-	return (
-		<div className='min-h-screen bg-gray-100 p-10'>
-			<h1 className='text-5xl font-bold text-center mb-10 text-blue-600'>Users</h1>
+type AddUserForm = {
+	profileImage: string;
+	name: string;
+	email: string;
+	password: string;
+	role: UserRole;
+};
 
-			<div className='grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 place-items-center'>
-				{users.map(user => (
-					<UserCard
-						key={user.id}
-						name={user.name}
-						email={user.email}
-						password={user.password}
-						role={user.role}
-						profileImage={user.profileImage}
+function AddUserModal({
+	open,
+	onClose,
+	onSave,
+}: {
+	open: boolean;
+	onClose: () => void;
+	onSave: (data: AddUserForm) => void;
+}) {
+	const {
+		register,
+		handleSubmit,
+		reset,
+		formState: { errors, isSubmitting },
+	} = useForm<AddUserForm>({
+		mode: 'onChange',
+		defaultValues: {
+			profileImage: '',
+			name: '',
+			email: '',
+			password: '',
+			role: 'user',
+		},
+	});
+
+	useEffect(() => {
+		if (!open) return;
+		const onKeyDown = (e: KeyboardEvent) => {
+			if (e.key === 'Escape') onClose();
+		};
+		window.addEventListener('keydown', onKeyDown);
+		return () => window.removeEventListener('keydown', onKeyDown);
+	}, [open, onClose]);
+
+	useEffect(() => {
+		if (!open) return;
+		const prev = document.body.style.overflow;
+		document.body.style.overflow = 'hidden';
+		return () => {
+			document.body.style.overflow = prev;
+		};
+	}, [open]);
+
+	if (!open) return null;
+
+	const input = 'w-full rounded-2xl border px-4 py-3 text-sm outline-none transition focus:ring-2';
+	const err = 'mt-1 text-xs text-red-600';
+
+	const submit = async (data: AddUserForm) => {
+		onSave({
+			...data,
+			profileImage: data.profileImage.trim() || `https://i.pravatar.cc/150?u=${encodeURIComponent(data.email)}`,
+		});
+		reset();
+		onClose();
+	};
+
+	return (
+		<div className='fixed inset-0 z-999 flex items-center justify-center p-4'>
+			<button className='absolute inset-0 bg-black/40' onClick={onClose} aria-label='Close modal' />
+
+			{/* Modal */}
+			<div className='relative w-full max-w-xl rounded-3xl bg-white p-6 sm:p-8 shadow-2xl'>
+				<div className='mb-5 flex items-center justify-between'>
+					<h2 className='text-lg sm:text-xl font-bold'>Add User</h2>
+					<button onClick={onClose} className='rounded-xl px-3 py-2 text-sm hover:bg-gray-100'>
+						✕
+					</button>
+				</div>
+
+				<form onSubmit={handleSubmit(submit)} className='space-y-4'>
+					<input
+						placeholder='user image url...'
+						className={`${input} ${
+							errors.profileImage ? 'border-red-400 focus:ring-red-200' : 'border-gray-300 focus:ring-blue-200'
+						}`}
+						{...register('profileImage', {
+							validate: v => !v || /^https?:\/\/.+/i.test(v) || 'URL http/https bilan boshlansin',
+						})}
 					/>
-				))}
+					{errors.profileImage && <p className={err}>{errors.profileImage.message}</p>}
+
+					<input
+						placeholder='user fullName...'
+						className={`${input} ${
+							errors.name ? 'border-red-400 focus:ring-red-200' : 'border-gray-300 focus:ring-blue-200'
+						}`}
+						{...register('name', {
+							required: 'Ism majburiy',
+							minLength: { value: 2, message: 'Kamida 2 ta harf' },
+						})}
+					/>
+					{errors.name && <p className={err}>{errors.name.message}</p>}
+
+					<input
+						placeholder='user email...'
+						className={`${input} ${
+							errors.email ? 'border-red-400 focus:ring-red-200' : 'border-gray-300 focus:ring-blue-200'
+						}`}
+						{...register('email', {
+							required: 'Email majburiy',
+							pattern: {
+								value: /^[^\s@]+@[^\s@]+\.[^\s@]+$/,
+								message: 'Email formati noto‘g‘ri',
+							},
+						})}
+					/>
+					{errors.email && <p className={err}>{errors.email.message}</p>}
+
+					<input
+						type='password'
+						placeholder='user password...'
+						className={`${input} ${
+							errors.password ? 'border-red-400 focus:ring-red-200' : 'border-gray-300 focus:ring-blue-200'
+						}`}
+						{...register('password', {
+							required: 'Parol majburiy',
+							minLength: { value: 6, message: 'Kamida 6 ta belgi' },
+						})}
+					/>
+					{errors.password && <p className={err}>{errors.password.message}</p>}
+
+					<div className='flex items-center gap-3'>
+						<span className='text-sm font-semibold text-gray-700'>role:</span>
+						<select
+							className='rounded-2xl border border-gray-300 px-3 py-2 text-sm outline-none focus:ring-2 focus:ring-blue-200'
+							{...register('role')}>
+							<option value='user'>user</option>
+							<option value='admin'>admin</option>
+						</select>
+					</div>
+
+					<div className='pt-2 flex justify-center'>
+						<button
+							type='submit'
+							disabled={isSubmitting}
+							className='w-full sm:w-56 rounded-2xl bg-sky-400 py-3 font-bold text-white shadow-md hover:bg-sky-500 transition disabled:opacity-60'>
+							{isSubmitting ? 'Saving...' : 'Save'}
+						</button>
+					</div>
+				</form>
 			</div>
+		</div>
+	);
+}
+
+function Users() {
+	const [users, setUsers] = useState<User[]>(initialUsers);
+	const [open, setOpen] = useState(false);
+
+	const nextId = useMemo(() => {
+		return (users.reduce((max, u) => (u.id > max ? u.id : max), 0) || 0) + 1;
+	}, [users]);
+
+	const addUser = (data: AddUserForm) => {
+		const newUser: User = { id: nextId, ...data };
+		setUsers(prev => [newUser, ...prev]);
+	};
+
+	return (
+		<div className='min-h-screen p-6 sm:p-10'>
+			<div className='mx-auto max-w-6xl'>
+				{/* Header */}
+				<div className='mb-8 flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between'>
+					<h1 className='text-4xl sm:text-5xl font-bold text-blue-600'>Users</h1>
+
+					<button
+						onClick={() => setOpen(true)}
+						className='self-start sm:self-auto rounded-xl bg-sky-200 px-6 py-2 font-semibold text-sky-900 hover:bg-sky-300 transition'>
+						+ user
+					</button>
+				</div>
+
+				<div className='grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 place-items-center'>
+					{users.map(user => (
+						<UserCard key={user.id} user={user} />
+					))}
+				</div>
+			</div>
+
+			<AddUserModal open={open} onClose={() => setOpen(false)} onSave={addUser} />
 		</div>
 	);
 }

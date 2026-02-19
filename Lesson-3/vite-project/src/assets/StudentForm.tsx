@@ -30,7 +30,6 @@ export default function StudentForm() {
 		<div className='min-h-screen flex items-center justify-center p-4'>
 			<div className='w-full max-w-md bg-white rounded-2xl shadow-xl p-6 space-y-5'>
 				<form onSubmit={handleSubmit(onSubmit)} className='space-y-4'>
-					{/* Ism */}
 					<div>
 						<label className='font-semibold text-sm'>name:</label>
 						<input
@@ -43,7 +42,6 @@ export default function StudentForm() {
 						{errors.firstName && <p className='text-red-500 text-xs mt-1'>{errors.firstName.message}</p>}
 					</div>
 
-					{/* Familiya */}
 					<div>
 						<label className='font-semibold text-sm'>Surname:</label>
 						<input
@@ -56,7 +54,6 @@ export default function StudentForm() {
 						{errors.lastName && <p className='text-red-500 text-xs mt-1'>{errors.lastName.message}</p>}
 					</div>
 
-					{/* Yosh */}
 					<div>
 						<label className='font-semibold text-sm'>Yosh:</label>
 						<select
@@ -85,7 +82,6 @@ export default function StudentForm() {
 						)}
 					</div>
 
-					{/* Email */}
 					<div>
 						<label className='font-semibold text-sm'>Email:</label>
 						<input
@@ -105,7 +101,6 @@ export default function StudentForm() {
 						{errors.email && <p className='text-red-500 text-xs mt-1'>{errors.email.message}</p>}
 					</div>
 
-					{/* Parol */}
 					<div>
 						<label className='font-semibold text-sm'>Parol:</label>
 						<input
@@ -130,7 +125,6 @@ export default function StudentForm() {
 						)}
 					</div>
 
-					{/* Maktab raqami */}
 					<div>
 						<label className='font-semibold text-sm'>Maktab raqami:</label>
 						<input
@@ -149,7 +143,6 @@ export default function StudentForm() {
 						{errors.schoolNumber && <p className='text-red-500 text-xs mt-1'>{errors.schoolNumber.message}</p>}
 					</div>
 
-					{/* Button */}
 					<button
 						type='submit'
 						className='w-full bg-blue-600 text-white font-semibold py-2 rounded-xl hover:bg-blue-700 transition shadow-md'>
