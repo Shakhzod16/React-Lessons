@@ -1,56 +1,123 @@
-import { useState } from 'react';
-import './App.css';
+import { useEffect, useState } from 'react';
+import type { Book, BookCreate } from './types';
+import BookCard from './components/BookCard';
+import BookModal from './components/BookModal';
+import User from './components/User';
 
-import Components from './assets/Components';
-import CompontentsTodos from './assets/CompontentsTodos';
-import CompontentsUsers from './assets/CompontentsUsers';
+const API = 'http://127.0.0.1:3000/books';
 
-type Tab = 'todos' | 'users' | 'posts';
+export default function App() {
+	// ✅ User componentni render qilish uchun uni return ichiga qo‘shamiz
+	const [books, setBooks] = useState<Book[]>([]);
+	const [open, setOpen] = useState(false);
+	const [editBook, setEditBook] = useState<Book | null>(null);
 
-function App() {
-	const [tab, setTab] = useState<Tab>('todos');
+	// ==========================
+	// ⛔️ Vaqtinchalik: backend funksiyalar ishlamasin, lekin kod tursin
+	// (xohlasang keyin kommentdan chiqarib ishlatib yuborasiz)
+	// ==========================
+
+	// const fetchBooks = async () => {
+	// 	try {
+	// 		const res = await fetch(API);
+	// 		if (!res.ok) throw new Error('Server error');
+	// 		const data = await res.json();
+	// 		setBooks(data);
+	// 	} catch (err) {
+	// 		console.error('Fetch error:', err);
+	// 	}
+	// };
+
+	useEffect(() => {
+		// fetchBooks(); // ⛔️ vaqtinchalik o‘chirildi
+	}, []);
+
+	// const handleSubmit = async (data: BookCreate) => {
+	// 	try {
+	// 		if (editBook) {
+	// 			await fetch(`${API}/${editBook.id}`, {
+	// 				method: 'PUT',
+	// 				headers: { 'Content-Type': 'application/json' },
+	// 				body: JSON.stringify({ ...data, id: editBook.id }),
+	// 			});
+	// 		} else {
+	// 			await fetch(API, {
+	// 				method: 'POST',
+	// 				headers: { 'Content-Type': 'application/json' },
+	// 				body: JSON.stringify(data),
+	// 			});
+	// 		}
+
+	// 		setOpen(false);
+	// 		setEditBook(null);
+	// 		fetchBooks();
+	// 	} catch (err) {
+	// 		console.error('Submit error:', err);
+	// 	}
+	// };
+
+	// const handleDelete = async (id: number) => {
+	// 	try {
+	// 		await fetch(`${API}/${id}`, { method: 'DELETE' });
+	// 		fetchBooks();
+	// 	} catch (err) {
+	// 		console.error('Delete error:', err);
+	// 	}
+	// };
+
+	// ✅ vaqtinchalik ishlaydigan "dummy" handlerlar (error bermasligi uchun)
+	const handleSubmit = async (_data: BookCreate) => {
+		// vaqtinchalik
+		setOpen(false);
+		setEditBook(null);
+	};
+
+	const handleDelete = async (_id: number) => {
+		// vaqtinchalik
+	};
 
 	return (
-		<div className='p-4'>
-			<div className='flex justify-center gap-4'>
-				<button
-					type='button'
-					onClick={() => setTab('todos')}
-					className={`text-white bg-linear-to-br from-purple-600 to-blue-500 hover:bg-linear-to-bl
-          focus:ring-4 focus:outline-none focus:ring-blue-300 dark:focus:ring-blue-800 font-medium
-          rounded-lg text-sm px-4 py-2.5 text-center leading-5
-          ${tab === 'todos' ? 'ring-4 ring-blue-300' : ''}`}>
-					Todos
-				</button>
+		<div className='min-h-screen bg-gray-100 p-8'>
+			{/* ✅ USER COMPONENT */}
+			<div className='mb-6 rounded-xl bg-white p-4 shadow'>
+				<User />
+			</div>
 
+			<div className='flex justify-between items-center mb-6'>
+				<h1 className='text-2xl font-bold'>Books</h1>
 				<button
-					type='button'
-					onClick={() => setTab('users')}
-					className={`text-white bg-linear-to-br from-purple-600 to-blue-500 hover:bg-linear-to-bl
-          focus:ring-4 focus:outline-none focus:ring-blue-300 dark:focus:ring-blue-800 font-medium
-          rounded-lg text-sm px-4 py-2.5 text-center leading-5
-          ${tab === 'users' ? 'ring-4 ring-blue-300' : ''}`}>
-					Users
-				</button>
-
-				<button
-					type='button'
-					onClick={() => setTab('posts')}
-					className={`text-white bg-linear-to-br from-purple-600 to-blue-500 hover:bg-linear-to-bl
-          focus:ring-4 focus:outline-none focus:ring-blue-300 dark:focus:ring-blue-800 font-medium
-          rounded-lg text-sm px-4 py-2.5 text-center leading-5
-          ${tab === 'posts' ? 'ring-4 ring-blue-300' : ''}`}>
-					Posts
+					onClick={() => {
+						setEditBook(null);
+						setOpen(true);
+					}}
+					className='px-4 py-2 bg-black text-white rounded-xl'>
+					+ Book
 				</button>
 			</div>
 
-			<div className='mt-6'>
-				{tab === 'todos' && <Components />}
-				{tab === 'users' && <CompontentsUsers />}
-				{tab === 'posts' && <CompontentsTodos />}
+			<div className='grid grid-cols-3 gap-4'>
+				{books.map(book => (
+					<BookCard
+						key={book.id}
+						book={book}
+						onEdit={b => {
+							setEditBook(b);
+							setOpen(true);
+						}}
+						onDelete={handleDelete}
+					/>
+				))}
 			</div>
+
+			<BookModal
+				open={open}
+				onClose={() => {
+					setOpen(false);
+					setEditBook(null);
+				}}
+				onSubmit={handleSubmit}
+				editBook={editBook}
+			/>
 		</div>
 	);
 }
-
-export default App;
