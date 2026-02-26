@@ -1,31 +1,14 @@
 {
-	"books": [
+	"tasks": [
 		{
-			"id": 1,
-			"name": "Clean Code",
-			"description": "Readable and maintainable code writing principles.",
-			"price": 29,
-			"author": "Robert C. Martin"
-		}
-	],
-	"users": [
-		{
-			"id": 1,
-			"name": "Ali Valiyev",
-			"age": 21,
-			"isStudent": true
+			"id": "23ed",
+			"name": "erfd",
+			"status": "progress"
 		},
 		{
-			"id": 2,
-			"name": "Madina Karimova",
-			"age": 25,
-			"isStudent": false
-		},
-		{
-			"id": 3,
-			"name": "Bekzod Tursunov",
-			"age": 19,
-			"isStudent": true
+			"id": "23ed",
+			"name": "erfd",
+			"status": "todo"
 		}
 	]
 }

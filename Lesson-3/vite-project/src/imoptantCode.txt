@@ -1,0 +1,125 @@
+import { useEffect, useState } from 'react';
+import type { Book, BookCreate } from './types';
+import BookCard from './components/BookCard';
+import BookModal from './components/BookModal';
+import User from './components/User';
+
+const BOOKS_API = 'http://127.0.0.1:3000/books';
+
+export default function App() {
+	const [books, setBooks] = useState<Book[]>([]);
+	const [open, setOpen] = useState(false);
+	const [editBook, setEditBook] = useState<Book | null>(null);
+	const [loading, setLoading] = useState(false);
+	const [error, setError] = useState<string>('');
+
+	const fetchBooks = async () => {
+		setLoading(true);
+		setError('');
+		try {
+			const res = await fetch(BOOKS_API);
+			if (!res.ok) throw new Error('Books: server error');
+			const data = (await res.json()) as Book[];
+			setBooks(data);
+		} catch (err) {
+			console.error(err);
+			setError('Books yuklashda xatolik!');
+		} finally {
+			setLoading(false);
+		}
+	};
+
+	useEffect(() => {
+		fetchBooks();
+	}, []);
+
+	const handleSubmit = async (data: BookCreate) => {
+		setError('');
+		try {
+			if (editBook) {
+				const res = await fetch(`${BOOKS_API}/${editBook.id}`, {
+					method: 'PUT',
+					headers: { 'Content-Type': 'application/json' },
+					body: JSON.stringify({ ...data, id: editBook.id }),
+				});
+				if (!res.ok) throw new Error('Books: update error');
+			} else {
+				const res = await fetch(BOOKS_API, {
+					method: 'POST',
+					headers: { 'Content-Type': 'application/json' },
+					body: JSON.stringify(data),
+				});
+				if (!res.ok) throw new Error('Books: create error');
+			}
+
+			setOpen(false);
+			setEditBook(null);
+			await fetchBooks();
+		} catch (err) {
+			console.error(err);
+			setError('Book saqlashda xatolik!');
+		}
+	};
+
+	const handleDelete = async (id: number) => {
+		setError('');
+		try {
+			const res = await fetch(`${BOOKS_API}/${id}`, { method: 'DELETE' });
+			if (!res.ok) throw new Error('Books: delete error');
+			await fetchBooks();
+		} catch (err) {
+			console.error(err);
+			setError('Book o‘chirishda xatolik!');
+		}
+	};
+
+	return (
+		<div className='min-h-screen bg-gray-100 p-8'>
+			<div className='mb-6 rounded-xl bg-white p-4 shadow'>
+				<User />
+			</div>
+
+			<div className='flex justify-between items-center mb-6'>
+				<h1 className='text-2xl font-bold'>Books</h1>
+				<button
+					onClick={() => {
+						setEditBook(null);
+						setOpen(true);
+					}}
+					className='px-4 py-2 bg-black text-white rounded-xl'>
+					+ Book
+				</button>
+			</div>
+
+			{error && <div className='mb-4 rounded-lg bg-red-50 text-red-700 px-4 py-3 border border-red-200'>{error}</div>}
+
+			{loading ? (
+				<div className='text-gray-600'>Loading...</div>
+			) : (
+				<div className='grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4'>
+					{books.map(book => (
+						<BookCard
+							key={book.id}
+							book={book}
+							onEdit={b => {
+								setEditBook(b);
+								setOpen(true);
+							}}
+							onDelete={handleDelete}
+						/>
+					))}
+				</div>
+			)}
+
+			<BookModal
+				open={open}
+				onClose={() => {
+					setOpen(false);
+					setEditBook(null);
+				}}
+				onSubmit={handleSubmit}
+				editBook={editBook}
+			/>
+		</div>
+	);
+}
