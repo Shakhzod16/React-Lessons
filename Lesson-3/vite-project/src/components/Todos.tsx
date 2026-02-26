@@ -11,6 +11,9 @@ function Todos() {
 	const [todoInput, setTodoInput] = useState('');
 	const [progressInput, setProgressInput] = useState('');
 	const [completedInput, setCompletedInput] = useState('');
+	const [editngId, setEditingId] = useState<string | null>(null);
+
+	const [touchId, setTouchId] = useState('');
 
 	useEffect(() => {
 		getTasks();
@@ -31,9 +34,12 @@ function Todos() {
 				name: type === Status.TODO ? todoInput : type === Status.PROGRESS ? progressInput : completedInput,
 				status: type,
 			};
-
-			await axios.post(API_URL + '/tasks', taskObj);
-			await getTasks();
+			if (editngId === null) {
+				await axios.post(API_URL + '/tasks', taskObj);
+			} else {
+				await axios.put(API_URL + `/tasks/${editngId}`, taskObj);
+				setEditingId(null);
+			}
 
 			// ✅ inputlarni bo‘shatib yuboramiz
 			if (type === Status.TODO) setTodoInput('');
@@ -66,6 +72,18 @@ function Todos() {
 		} else {
 			setCompletedInput(currentTask.name);
 		}
+		setEditingId(String(currentTask.id));
+	};
+
+	const handleDrop = async (status: Status) => {
+		try {
+			await axios.patch(API_URL + `/tasks/${touchId}`, {
+				status,
+			});
+			getTasks();
+		} catch (error) {
+			console.log(error);
+		}
 	};
 
 	return (
@@ -76,7 +94,7 @@ function Todos() {
 					Todo ({calculateCount(Status.TODO)})
 				</div>
 
-				<div className='p-4 flex-1'>
+				<div className='p-4 flex-1' onDragOver={e => e.preventDefault()} onDrop={() => handleDrop(Status.TODO)}>
 					{tasks
 						.filter(t => t.status === Status.TODO)
 						.map(task => (
@@ -85,6 +103,7 @@ function Todos() {
 								name={task.name}
 								deleteTask={() => handleDelete(task.id)}
 								editTask={() => handleEdit(task)}
+								onDrag={() => setTouchId(String(task.id))}
 							/>
 						))}
 				</div>
@@ -112,7 +131,7 @@ function Todos() {
 					Progress ({calculateCount(Status.PROGRESS)})
 				</div>
 
-				<div className='p-4 flex-1'>
+				<div className='p-4 flex-1' onDragOver={e => e.preventDefault()} onDrop={() => handleDrop(Status.PROGRESS)}>
 					{tasks
 						.filter(t => t.status === Status.PROGRESS)
 						.map(task => (
@@ -121,6 +140,7 @@ function Todos() {
 								name={task.name}
 								deleteTask={() => handleDelete(task.id)}
 								editTask={() => handleEdit(task)}
+								onDrag={() => setTouchId(String(task.id))}
 							/>
 						))}
 				</div>
@@ -148,7 +168,7 @@ function Todos() {
 					Completed ({calculateCount(Status.COMPLETED)})
 				</div>
 
-				<div className='p-4 flex-1'>
+				<div className='p-4 flex-1' onDragOver={e => e.preventDefault()} onDrop={() => handleDrop(Status.COMPLETED)}>
 					{tasks
 						.filter(t => t.status === Status.COMPLETED)
 						.map(task => (
@@ -157,6 +177,7 @@ function Todos() {
 								name={task.name}
 								deleteTask={() => handleDelete(task.id)}
 								editTask={() => handleEdit(task)}
+								onDrag={() => setTouchId(String(task.id))}
 							/>
 						))}
 				</div>
