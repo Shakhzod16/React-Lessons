@@ -1,0 +1,39 @@
+{
+  "orders": [
+    {
+      "id": "bf3d",
+      "name": "Salom Alikov",
+      "phone": "+95965945824",
+      "count": 2,
+      "status": "PROGRESS"
+    },
+    {
+      "id": "6d02",
+      "name": "Ahmad Sharamov",
+      "phone": "+98987456321",
+      "count": 4,
+      "status": "NEW"
+    },
+    {
+      "id": "eca8",
+      "name": "Sherali Ahtamov",
+      "phone": "+998936547896",
+      "count": 5,
+      "status": "PROGRESS"
+    },
+    {
+      "id": "7df3",
+      "name": "Ali Valiyev",
+      "phone": "+9896455555",
+      "count": 1,
+      "status": "NEW"
+    },
+    {
+      "id": "cf43",
+      "name": "Akrom Bekromov",
+      "phone": "+9999",
+      "count": 2,
+      "status": "DELIVERED"
+    }
+  ]
+}
