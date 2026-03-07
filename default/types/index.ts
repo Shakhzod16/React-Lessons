@@ -1,13 +1,5 @@
-export enum Status {
-	NEW = 'NEW',
-	PROGRESS = 'PROGRESS',
-	DELIVERED = 'DELIVERED',
-}
-
-export type Order = {
-	id: number;
+export type User = {
+	id: string;
 	name: string;
-	phone: string;
-	count: number;
-	status: Status;
+	age: number;
 };

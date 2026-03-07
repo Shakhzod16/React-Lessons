@@ -1,15 +1,18 @@
-import Navbar from './components/Navbar';
-import { Routes, Route } from 'react-router-dom';
-import About from './components/About';
-import Contact from './components/Contact';
-import Home from './components/Home';
-import OurTeam from './components/OurTeam';
-import Portifolio from './components/Portifolio';
+// import Navbar from './components/Navbar';
+// import { Routes, Route } from 'react-router-dom';
+// import About from './components/About';
+// import Contact from './components/Contact';
+// import Home from './components/Home';
+// import OurTeam from './components/OurTeam';
+// import Portifolio from './components/Portifolio';
+
+import Crud from './components/Crud';
 
 export default function App() {
 	return (
 		<>
-			<Navbar />
+			<Crud />
+			{/* <Navbar />
 
 			<Routes>
 				<Route path='/' element={<Home />} />
@@ -17,7 +20,7 @@ export default function App() {
 				<Route path='/contact' element={<Contact />} />
 				<Route path='/team' element={<OurTeam />} />
 				<Route path='/portfolio' element={<Portifolio />} />
-			</Routes>
+			</Routes> */}
 		</>
 	);
 }
