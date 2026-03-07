@@ -1,19 +1,14 @@
 {
   "users": [
     {
-      "id": "bf3d",
-      "name": "Salom Alikov",
-      "age": 34
-    },
-    {
-      "id": "0101",
       "name": "Alisher",
-      "age": 5
+      "age": 6,
+      "id": "0101"
     },
     {
-      "id": "c048",
-      "name": "kj",
-      "age": 4
+      "name": "O'ktam",
+      "age": 34,
+      "id": "c014"
     }
   ]
 }

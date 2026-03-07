@@ -9,15 +9,34 @@ function Crud() {
 	const [name, setNmae] = useState('');
 	const [age, setAge] = useState('');
 
+	const [editingId, setEditingId] = useState<null | string>(null);
+
 	useEffect(() => {
 		getUser();
 	}, []);
 
-	const deleteUser = () => {};
+	const deleteUser = async (id: string) => {
+		try {
+			await axios.delete(API_URL + `/users/${id}`);
+			getUser();
+		} catch (error) {
+			console.log(error);
+		}
+	};
 	const createUser = async () => {
 		try {
-      await axios.post(API_URL + '/users', { name, age: parseInt(age) });
-      getUser()
+			const userObj = {
+				name,
+				age: parseInt(age),
+			};
+			if (editingId === null) {
+				await axios.post(API_URL + '/users', userObj);
+			} else {
+				await axios.put(API_URL + `/users/${editingId}`, userObj);
+				setEditingId(null)
+			}
+
+			getUser();
 		} catch (error) {
 			console.log(error);
 		}
@@ -32,7 +51,11 @@ function Crud() {
 		}
 	};
 
-	const editUser = () => {};
+	const editUser = (user: User) => {
+		setNmae(user.name);
+		setAge(user.age.toString());
+		setEditingId(user.id);
+	};
 
 	return (
 		<div className='container py-2'>
@@ -78,8 +101,12 @@ function Crud() {
 							<td>{user.name}</td>
 							<td>{user.age}</td>
 							<td className='d-flex gap-2 align-center'>
-								<button className='btn btn-danger'>🗑️</button>
-								<button className='btn btn-warning'>✏️</button>
+								<button onClick={() => deleteUser(user.id)} className='btn btn-danger'>
+									🗑️
+								</button>
+								<button onClick={() => editUser(user)} className='btn btn-warning'>
+									✏️
+								</button>
 							</td>
 						</tr>
 					))}
