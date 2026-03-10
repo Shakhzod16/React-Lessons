@@ -1,5 +1,19 @@
+
+
 export type User = {
-	id: string;
+	id: number;
 	name: string;
-	age: number;
+	email: string;
+	phone: string;
+	website: string;
+	address: {
+		city: string;
+	};
+};
+
+export type Todo = {
+	userId: number;
+	id: number;
+	title: string;
+	completed: boolean;
 };
