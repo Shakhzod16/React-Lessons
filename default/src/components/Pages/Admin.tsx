@@ -35,10 +35,10 @@ function Admin() {
 									to={item.to}
 									className={`flex items-center gap-3 rounded-xl px-3 py-3 text-sm font-medium no-underline transition ${
 										isActive
-											? 'bg-slate-100 text-slate-900 shadow-[inset_3px_0_0_0_#0ea5e9]'
-											: 'text-slate-600 hover:bg-slate-50 hover:text-slate-900'
+											? 'bg-slate-100 text-black shadow-[inset_3px_0_0_0_#0ea5e9]'
+											: 'text-black hover:bg-slate-50 hover:text-black'
 									}`}>
-									<Icon className='text-lg' />
+									<Icon className='text-lg text-black' />
 									<span>{item.label}</span>
 								</NavLink>
 							);
@@ -52,7 +52,7 @@ function Admin() {
 							<Link
 								to='/'
 								aria-label='Asosiy menu'
-								className='flex h-10 w-10 items-center justify-center rounded-full border border-slate-200 text-slate-600 no-underline transition hover:bg-slate-100 hover:text-slate-900'>
+								className='flex h-10 w-10 items-center justify-center rounded-full border border-slate-200 text-slate-600 no-underline transition hover:border-red-500 hover:bg-red-500 hover:text-white active:border-red-600 active:bg-red-600 active:text-white'>
 								<RiCloseLine className='text-xl' />
 							</Link>
 						</div>
