@@ -19,7 +19,6 @@ function Books() {
 
 	return (
 		<div className='container mt-5'>
-			{/* ADD BOOK CARD */}
 			<div className='d-flex justify-content-center'>
 				<div className='card shadow' style={{ width: '350px' }}>
 					<div className='card-header bg-dark text-white text-center'>Add Book</div>
@@ -50,7 +49,6 @@ function Books() {
 				</div>
 			</div>
 
-			{/* TABLE */}
 			<table className='table table-bordered mt-4 text-center'>
 				<thead className='table-dark'>
 					<tr>

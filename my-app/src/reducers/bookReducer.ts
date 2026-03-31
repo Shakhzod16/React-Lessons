@@ -55,6 +55,12 @@ export function bookReducer(state: State, action: Action) {
 				editingIndex: action.payload,
 			};
 
+		case 'DELETE_BOOK':
+			return {
+				...state,
+				books: state.books.filter(book => book.id !== action.payload),
+			};
+
 		default:
 			return state;
 	}
