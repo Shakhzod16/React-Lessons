@@ -1,12 +1,12 @@
 import './App.css';
-import Books from './components/Books';
-import Counter from './components/Counter';
+import Books1 from './components/Books1';
+import Counters from './components/Counters';
 
 function App() {
 	return (
 		<>
-			<Counter />
-			<Books />
+			<Counters />
+			<Books1 />
 		</>
 	);
 }
