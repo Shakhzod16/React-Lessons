@@ -1,15 +1,14 @@
 import './App.css';
-import Books1 from './components/Books1';
-import Counters from './components/Counters';
-import Users from './components/Users';
+import Groups from './components/Groups';
+import Header from './components/Header';
+import Students from './components/Students';
 
 function App() {
 	return (
 		<>
-			<Counters />
-			<Books1 />
-			<hr />
-			<Users />
+			<Header />
+			<Groups />
+			<Students />
 		</>
 	);
 }
