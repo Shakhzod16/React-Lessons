@@ -1,31 +1,31 @@
 {
-	"users": [
-		{
-			"id": "3rr56",
-			"name": "Roma",
-			"age": 3,
-			"isStudent": true
-		},
-		{
-			"id": "FlO0HQxT0Lo",
-			"name": "ali",
-			"age": 25,
-			"isStudent": false
-		}
-	],
-	"books": [
-		{
-			"id": "b1",
-			"name": "Clean Code",
-			"author": "Robert C. Martin",
-			"year": 2008
-		},
-		{
-			"id": "b2",
-			"name": "Refactoring",
-			"author": "Martin Fowler",
-			"year": 2019
-		}
-	],
-	"$schema": "./node_modules/json-server/schema.json"
+  "users": [
+    {
+      "id": "3rr56",
+      "name": "Roma",
+      "age": 3,
+      "isStudent": true
+    },
+    {
+      "id": "FlO0HQxT0Lo",
+      "name": "alieee",
+      "age": 25,
+      "isStudent": false
+    }
+  ],
+  "books": [
+    {
+      "id": "b1",
+      "name": "Clean Code",
+      "author": "Robert C. Martin",
+      "year": 2008
+    },
+    {
+      "id": "b2",
+      "name": "Refactoring",
+      "author": "Martin Fowler ewrw",
+      "year": 2019
+    }
+  ],
+  "$schema": "./node_modules/json-server/schema.json"
 }

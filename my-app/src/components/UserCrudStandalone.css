@@ -1,0 +1,95 @@
+.crud-wrapper {
+	max-width: 900px;
+	margin: 24px auto;
+	padding: 0 16px;
+}
+
+.crud-card {
+	width: 100%;
+	max-width: 370px;
+	margin: 0 auto;
+	border: 1px solid #dde1e6;
+	border-radius: 6px;
+	overflow: hidden;
+	background: #ffffff;
+}
+
+.crud-card-header {
+	background: #1e2228;
+	color: #ffffff;
+	text-align: center;
+	padding: 10px 12px;
+	font-size: 14px;
+}
+
+.crud-card-body {
+	padding: 10px;
+}
+
+.crud-checkbox-row {
+	display: inline-flex;
+	align-items: center;
+	gap: 8px;
+	margin-top: 8px;
+	font-size: 14px;
+}
+
+.crud-card-footer {
+	padding: 10px;
+	border-top: 1px solid #eceff3;
+	display: flex;
+	gap: 8px;
+}
+
+.crud-save-btn {
+	background: #1e2228;
+	color: #ffffff;
+	width: 100%;
+	border: 0;
+}
+
+.crud-save-btn:hover,
+.crud-save-btn:focus {
+	background: #14181d;
+	color: #ffffff;
+}
+
+.crud-save-btn:disabled {
+	background: #717680;
+	color: #f3f4f6;
+}
+
+.crud-error {
+	margin: 0;
+	padding: 0 10px 10px;
+	color: #c62828;
+	font-size: 13px;
+}
+
+.crud-table-wrap {
+	margin-top: 12px;
+	border: 1px solid #dee2e6;
+	border-radius: 6px;
+	overflow: hidden;
+	background: #ffffff;
+}
+
+.crud-table-wrap th {
+	font-size: 13px;
+	font-weight: 600;
+}
+
+.crud-table-wrap td {
+	font-size: 13px;
+}
+
+.crud-actions {
+	display: inline-flex;
+	gap: 6px;
+}
+
+@media (max-width: 576px) {
+	.crud-wrapper {
+		padding: 0 10px;
+	}
+}
