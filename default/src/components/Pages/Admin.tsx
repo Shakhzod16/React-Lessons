@@ -1,5 +1,6 @@
 import { Link, Outlet, NavLink, useLocation } from 'react-router-dom';
 import { RiCloseLine, RiGroupLine, RiMegaphoneLine, RiMessage2Line, RiRobotLine } from 'react-icons/ri';
+import { FaTelegram } from 'react-icons/fa';
 
 const menuItems = [
 	{ to: '/admin/gruhlar', label: 'Gruhlar', icon: RiGroupLine },
@@ -17,7 +18,7 @@ function Admin() {
 				<div className='w-70 border-r border-slate-200/80 bg-white/70 px-4 py-5'>
 					<div className='mb-8 flex items-center gap-3'>
 						<div className='flex h-9 w-9 items-center justify-center rounded-full bg-sky-500 text-white shadow-sm'>
-							<RiMegaphoneLine />
+							<FaTelegram />
 						</div>
 						<div>
 							<h4 className='mb-0 text-base font-semibold text-slate-800'>Telegram</h4>
